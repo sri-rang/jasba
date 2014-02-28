@@ -12,7 +12,7 @@
     "main"           : "src/js/build.js",
     "bin"            : "src/js/build.js",
     "preferGlobal"   : true,
-    "devDependencies": {
+    "dependencies": {
         "uglify-js": "*",
         "watchr"   : "*",
         "fs-extra" : "*",
