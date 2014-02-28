@@ -41,6 +41,10 @@ has a simple json based configuration, example below:
         }
     }
 
+the config file must be called **build_config.json**.
+
+it must live in your project's root folder.
+
 ### why did you create this?
 
 i wanted something simple and minimal.
