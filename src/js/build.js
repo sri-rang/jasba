@@ -3,7 +3,6 @@
     "use strict";
 
     var fs = require("fs"),
-        child_process = require("child_process"),
         watchr = require("watchr"),
         fs_extra = require("fs-extra"),
         uglify_js = require("uglify-js"),
@@ -20,9 +19,10 @@
     for (var name in build_config) if (build_config.hasOwnProperty(name)) perform_build(name, build_config[name]);
 
     function perform_build(name, config) {
-        if (config.type === "uglify") perform_build_uglify(name, config);
+        if (config.type === "javascript") perform_build_javascript(name, config);
         else if (config.type === "copy") perform_build_copy(name, config);
         else if (config.type === "less") perform_build_less(name, config);
+        else throw new Error("Unknown build type: " + config.type);
         if (!config.being_watched && config.watch_folders) {
             watch(config.watch_folders, function () {
                 log.strong("\n  ~~ rebuild ~~");
@@ -32,7 +32,7 @@
         }
     }
 
-    function perform_build_uglify(name, config) {
+    function perform_build_javascript(name, config) {
         log.strong("\n" + name, config.type);
         var compile_files = config.sources,
             target = process.cwd() + "/" + config.target,
@@ -76,7 +76,7 @@
             ignoreCustomPatterns: /\.*___jb_bak___/i,
             paths               : folders,
             listeners           : {
-                change: function (change_type, file_path) { build_fn(); }
+                change: function (change_type, file_path) { build_fn(change_type, file_path); }
             },
             next                : function () {}
         });

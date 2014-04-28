@@ -1,21 +1,22 @@
 {
-    "name"           : "build.js",
-    "version"        : "1.0.0",
-    "description"    : "simple build server",
-    "keywords"       : ["build", "build tool", "build server", "uglify", "less"],
-    "author"         : "Srirangan <srirangan@gmail.com>",
-    "repository"     : {
+    "name"        : "build.js",
+    "version"     : "1.5.0",
+    "description" : "build server for javascript, typescript and less",
+    "keywords"    : ["build", "build tool", "build server", "uglify", "less"],
+    "author"      : "Srirangan <srirangan@gmail.com>",
+    "repository"  : {
         "type": "git",
         "url" : "https://github.com/Srirangan/build.js.git"
     },
-    "license"        : "MIT",
-    "main"           : "src/js/build.js",
-    "bin"            : "src/js/build.js",
-    "preferGlobal"   : true,
+    "license"     : "MIT",
+    "main"        : "src/js/build.js",
+    "bin"         : "src/js/build.js",
+    "preferGlobal": true,
     "dependencies": {
-        "uglify-js": "*",
-        "watchr"   : "*",
-        "fs-extra" : "*",
-        "less"     : "*"
+        "uglify-js"     : "*",
+        "watchr"        : "*",
+        "fs-extra"      : "*",
+        "less"          : "*",
+        "typescript.api": "*"
     }
 }
