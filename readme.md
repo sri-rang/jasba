@@ -1,6 +1,8 @@
-# build.js
+# jasba
 
 simple build server that compiles javascript and less source files.
+
+typescript and stylus support next.
 
 it runs a server that watches source folders and triggers the build on change.
 

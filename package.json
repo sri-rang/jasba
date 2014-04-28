@@ -1,23 +1,22 @@
 {
-    "name"        : "build.js",
-    "version"     : "1.5.0",
-    "description" : "build server for javascript, typescript and less",
-    "keywords"    : ["build", "build tool", "build server", "uglify", "less"],
+    "name"        : "jasba",
+    "version"     : "0.5.0",
+    "description" : "build server for javascript, typescript, stylus and less",
+    "keywords"    : ["build", "build tool", "build server", "uglify", "less", "javascript", "typescript", "stylus"],
     "author"      : "Srirangan <srirangan@gmail.com>",
     "repository"  : {
         "type": "git",
-        "url" : "https://github.com/Srirangan/build.js.git"
+        "url" : "https://github.com/Srirangan/jasba.git"
     },
     "license"     : "MIT",
-    "main"        : "src/js/build.js",
-    "bin"         : "src/js/build.js",
+    "main"        : "src/js/jasba.js",
+    "bin"         : "src/js/jasba.js",
     "preferGlobal": true,
     "dependencies": {
         "uglify-js"     : "*",
         "watchr"        : "*",
         "fs-extra"      : "*",
         "less"          : "*",
-        "typescript.api": "*",
-        "node-notifier" : "*"
+        "typescript.api": "*"
     }
 }
