@@ -20,8 +20,10 @@
 
     function perform_build(name, config) {
         if (config.type === "javascript") perform_build_javascript(name, config);
-        else if (config.type === "copy") perform_build_copy(name, config);
         else if (config.type === "less") perform_build_less(name, config);
+        else if (config.type === "copy") perform_build_copy(name, config);
+        else if (config.type === "typescript") perform_build_typescript(name, config);
+        else if (config.type === "stylus") perform_build_stylus(name, config);
         else throw new Error("Unknown build type: " + config.type);
         if (!config.being_watched && config.watch_folders) {
             watch(config.watch_folders, function () {
@@ -47,13 +49,6 @@
         log.faded("generated " + target);
     }
 
-    function perform_build_copy(name, config) {
-        log.strong("\n" + name, config.type);
-        if (config.cleanup_folders) config.cleanup_folders.forEach(function (path) {fs_extra.deleteSync(path);});
-        config.files.forEach(function (file) { fs_extra.copySync(file.src, file.dest); });
-        log.faded("done");
-    }
-
     function perform_build_less(name, config) {
         log.strong("\n" + name, config.type);
         var code = "",
@@ -67,6 +62,23 @@
                 log.faded("generated " + target);
             }
         });
+    }
+
+    function perform_build_copy(name, config) {
+        log.strong("\n" + name, config.type);
+        if (config.cleanup_folders) config.cleanup_folders.forEach(function (path) {fs_extra.deleteSync(path);});
+        config.files.forEach(function (file) { fs_extra.copySync(file.src, file.dest); });
+        log.faded("done");
+    }
+
+    function perform_build_typescript(name, config) {
+        log.strong("\n" + name, config.type);
+        throw new Error(config.type + " not implemented");
+    }
+
+    function perform_build_stylus(name, config) {
+        log.strong("\n" + name, config.type);
+        throw new Error(config.type + " not implemented");
     }
 
     function watch(folders, build_fn) {
