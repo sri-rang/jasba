@@ -17,6 +17,7 @@
         "watchr"        : "*",
         "fs-extra"      : "*",
         "less"          : "*",
-        "typescript.api": "*"
+        "typescript.api": "*",
+        "node-notifier" : "*"
     }
 }
