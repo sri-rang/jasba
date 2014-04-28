@@ -6,8 +6,7 @@
         watchr = require("watchr"),
         fs_extra = require("fs-extra"),
         uglify_js = require("uglify-js"),
-        less = require("less"),
-        notifier = new (require("node-notifier"))();
+        less = require("less");
 
     var build_config = require(process.cwd() + "/build_config.json");
 
@@ -21,19 +20,12 @@
     for (var name in build_config) if (build_config.hasOwnProperty(name)) perform_build(name, build_config[name]);
 
     function perform_build(name, config) {
-        try {
-            if (config.type === "javascript") perform_build_javascript(name, config);
-            else if (config.type === "less") perform_build_less(name, config);
-            else if (config.type === "copy") perform_build_copy(name, config);
-            else if (config.type === "typescript") perform_build_typescript(name, config);
-            else if (config.type === "stylus") perform_build_stylus(name, config);
-            else throw new Error("Unknown build type: " + config.type);
-            notifier.notify({title: "Success", message: name});
-        }
-        catch (e) {
-            notifier.notify({title: "Fail", message: name});
-            log.strong(e);
-        }
+        if (config.type === "javascript") perform_build_javascript(name, config);
+        else if (config.type === "less") perform_build_less(name, config);
+        else if (config.type === "copy") perform_build_copy(name, config);
+        else if (config.type === "typescript") perform_build_typescript(name, config);
+        else if (config.type === "stylus") perform_build_stylus(name, config);
+        else throw new Error("Unknown build type: " + config.type);
         if (!config.being_watched && config.watch_folders) {
             watch(config.watch_folders, function () {
                 log.strong("\n  ~~ rebuild ~~");
