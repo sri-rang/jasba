@@ -2,84 +2,31 @@
 (function () {
     "use strict";
 
-    var fs = require("fs"),
-        watchr = require("watchr"),
-        fs_extra = require("fs-extra"),
-        uglify_js = require("uglify-js"),
-        less = require("less");
-
-    var build_config = require(process.cwd() + "/build_config.json");
-
-    var log = {
-        faded : function () { console.log("\u001b[90m" + Array.prototype.slice.call(arguments).join(", ")); },
-        strong: function () { console.log("\u001b[33m" + Array.prototype.slice.call(arguments).join(", ")); }
-    };
+    var watchr = require("watchr"),
+        logger = require("./logger"),
+        builders = {
+            javascript: require("./build_javascript"),
+            typescript: require("./build_typescript"),
+            less      : require("./build_less"),
+            stylus    : require("./build_stylus"),
+            copy      : require("./build_copy")
+        },
+        build_config = require(process.cwd() + "/build_config.json");
 
     // main
-    log.faded("#");
+    logger.faded("#");
     for (var name in build_config) if (build_config.hasOwnProperty(name)) perform_build(name, build_config[name]);
 
     function perform_build(name, config) {
-        if (config.type === "javascript") perform_build_javascript(name, config);
-        else if (config.type === "less") perform_build_less(name, config);
-        else if (config.type === "copy") perform_build_copy(name, config);
-        else if (config.type === "typescript") perform_build_typescript(name, config);
-        else if (config.type === "stylus") perform_build_stylus(name, config);
-        else throw new Error("Unknown build type: " + config.type);
+        if (!builders.hasOwnProperty(config.type)) throw new Error("Unknown build type: " + config.type);
+        builders[config.type].build(name, config);
         if (!config.being_watched && config.watch_folders) {
             watch(config.watch_folders, function () {
-                log.strong("\n  ~~ rebuild ~~");
+                logger.strong("\n  ~~ rebuild ~~");
                 perform_build(name, config);
             });
             config.being_watched = true;
         }
-    }
-
-    function perform_build_javascript(name, config) {
-        log.strong("\n" + name, config.type);
-        var compile_files = config.sources,
-            target = process.cwd() + "/" + config.target,
-            code = "", ugly;
-        compile_files.forEach(function (file) { log.faded("compiling " + file); });
-        if (config.minify) {
-            ugly = uglify_js.minify(compile_files, {});
-            code = ugly.code;
-        }
-        else compile_files.forEach(function (path) {code += "\n // --- " + path + " \n\n" + fs.readFileSync(path, "utf-8");});
-        fs_extra.outputFileSync(target, code, "utf-8");
-        log.faded("generated " + target);
-    }
-
-    function perform_build_less(name, config) {
-        log.strong("\n" + name, config.type);
-        var code = "",
-            target = process.cwd() + "/" + config.target,
-            sources = config.sources;
-        sources.forEach(function (path) { code += fs.readFileSync(path, "utf-8"); });
-        less.render(code, {compress: config.minify}, function (error, css) {
-            if (error) throw new Error(error);
-            else {
-                fs_extra.outputFileSync(target, css, "utf-8"); // todo write css to target
-                log.faded("generated " + target);
-            }
-        });
-    }
-
-    function perform_build_copy(name, config) {
-        log.strong("\n" + name, config.type);
-        if (config.cleanup_folders) config.cleanup_folders.forEach(function (path) {fs_extra.deleteSync(path);});
-        config.files.forEach(function (file) { fs_extra.copySync(file.src, file.dest); });
-        log.faded("done");
-    }
-
-    function perform_build_typescript(name, config) {
-        log.strong("\n" + name, config.type);
-        throw new Error(config.type + " not implemented");
-    }
-
-    function perform_build_stylus(name, config) {
-        log.strong("\n" + name, config.type);
-        throw new Error(config.type + " not implemented");
     }
 
     function watch(folders, build_fn) {
