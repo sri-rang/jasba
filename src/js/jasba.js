@@ -19,13 +19,16 @@
 
     function perform_build(name, config) {
         if (!builders.hasOwnProperty(config.type)) throw new Error("Unknown build type: " + config.type);
-        builders[config.type].build(name, config);
-        if (!config.being_watched && config.watch_folders) {
-            watch(config.watch_folders, function () {
-                logger.strong("\n  ~~ rebuild ~~");
-                perform_build(name, config);
-            });
-            config.being_watched = true;
+        if (config.skip) logger.strong("\nskipping " + name);
+        else {
+            builders[config.type].build(name, config);
+            if (!config.being_watched && config.watch_folders) {
+                watch(config.watch_folders, function () {
+                    logger.strong("\n  ~~ rebuild ~~");
+                    perform_build(name, config);
+                });
+                config.being_watched = true;
+            }
         }
     }
 
