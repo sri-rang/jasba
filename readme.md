@@ -1,12 +1,10 @@
 # jasba
 
-simple build server that compiles javascript and less source files.
-
-typescript and stylus support next.
+jasba is a minimalist build tool that compiles javascript and less source files.
 
 it runs a server that watches source folders and triggers the build on change.
 
-has a simple json based configuration, example below:
+jasba projects have a simple json based build configuration, example below:
 
     {
         "compile less"    : {
