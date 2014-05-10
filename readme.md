@@ -18,7 +18,7 @@ jasba projects have a simple json based build configuration, example below:
             "watch_folders": ["src/less/"]
         },
         "compile js"      : {
-            "type"         : "uglify",
+            "type"         : "javascript",
             "sources"      : [
                 "libs/jquery.js",
                 "libs/underscore.js",
