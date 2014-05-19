@@ -2,16 +2,24 @@
 (function () {
     "use strict";
 
-    var watchr = require("watchr"),
+    var fs = require("fs"),
         logger = require("./logger"),
+        jasba_json_path = process.cwd() + "/jasba.json";
+
+    if (!fs.existsSync(jasba_json_path)) {
+        logger.strong("Error: Cannot find `jasba.json` at `" + process.cwd() + "`");
+        process.kill(process.pid, "SIGINT");
+    }
+
+    var watchr = require("watchr"),
         builders = {
             javascript: require("./build_javascript"),
             typescript: require("./build_typescript"),
-            less      : require("./build_less"),
-            stylus    : require("./build_stylus"),
-            copy      : require("./build_copy")
+            less: require("./build_less"),
+            stylus: require("./build_stylus"),
+            copy: require("./build_copy")
         },
-        build_config = require(process.cwd() + "/build_config.json");
+        build_config = require(jasba_json_path);
 
     // main
     logger.faded("#");
@@ -34,14 +42,14 @@
 
     function watch(folders, build_fn) {
         watchr.watch({
-            ignoreHiddenFiles   : true,
+            ignoreHiddenFiles: true,
             ignoreCommonPatterns: true,
             ignoreCustomPatterns: /\.*___jb_bak___/i,
-            paths               : folders,
-            listeners           : {
+            paths: folders,
+            listeners: {
                 change: function (change_type, file_path) { build_fn(change_type, file_path); }
             },
-            next                : function () {}
+            next: function () {}
         });
     }
 
