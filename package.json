@@ -1,6 +1,6 @@
 {
     "name"        : "jasba",
-    "version"     : "0.5.2",
+    "version"     : "0.5.3",
     "description" : "build server for javascript, typescript, stylus and less",
     "keywords"    : ["build", "build tool", "build server", "uglify", "less", "javascript", "typescript", "stylus"],
     "author"      : "Srirangan <srirangan@gmail.com>",
