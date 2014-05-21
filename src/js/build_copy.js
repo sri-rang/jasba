@@ -11,4 +11,5 @@
         config.files.forEach(function (file) { fs_extra.copySync(file.src, file.dest); });
         logger.faded("done");
     };
+
 })();
