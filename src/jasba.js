@@ -19,7 +19,8 @@
             stylus: require("./build_stylus"),
             copy: require("./build_copy")
         },
-        build_config = require(jasba_json_path);
+        build_config = require(jasba_json_path),
+        do_not_watch = process.argv.indexOf("--do-not-watch") > -1;
 
     // main
     logger.faded("#");
@@ -30,7 +31,7 @@
         if (config.skip) logger.strong("\nskipping " + name);
         else {
             builders[config.type].build(name, config);
-            if (!config.being_watched && config.watch_folders) {
+            if (!do_not_watch && !config.being_watched && config.watch_folders) {
                 watch(config.watch_folders, function () {
                     logger.strong("\n  ~~ rebuild ~~");
                     perform_build(name, config);
