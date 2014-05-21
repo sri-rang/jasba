@@ -1,6 +1,6 @@
 {
     "name"        : "jasba",
-    "version"     : "0.5.4",
+    "version"     : "0.5.5",
     "description" : "build server for javascript, typescript, stylus and less",
     "keywords"    : ["build", "build tool", "build server", "uglify", "less", "javascript", "typescript", "stylus"],
     "author"      : "Srirangan <srirangan@gmail.com>",
@@ -9,8 +9,8 @@
         "url" : "https://github.com/Srirangan/jasba.git"
     },
     "license"     : "MIT",
-    "main"        : "src/js/jasba.js",
-    "bin"         : "src/js/jasba.js",
+    "main"        : "src/jasba.js",
+    "bin"         : "src/jasba.js",
     "preferGlobal": true,
     "dependencies": {
         "uglify-js"     : "*",
