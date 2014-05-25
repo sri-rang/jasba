@@ -1,0 +1,23 @@
+{
+    "js": {
+        "type": "javascript",
+        "sources": ["src/js/some.js"],
+        "target": "target/some.min.js",
+        "watch_folders": ["src/js"]
+    },
+    "less": {
+        "type": "less",
+        "sources": ["src/less/some.less"],
+        "target": "target/some.css",
+        "watch_folders": ["src/less"]
+    },
+    "assets": {
+        "type": "copy",
+        "files": [
+            {
+                "src": "src/assets/some.png",
+                "dest": "target/some.png"
+            }
+        ]
+    }
+}
