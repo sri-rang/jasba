@@ -25,12 +25,5 @@
 
     // globals
     "globals": {
-        "ActiveXObject": true,
-        "bs": true,
-        "window": true,
-        "dom_js": true,
-        "svgweb": true,
-        "_": true,
-        "QUnit": true
     }
 }

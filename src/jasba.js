@@ -4,10 +4,11 @@
 
     var fs = require("fs"),
         logger = require("./logger"),
-        jasba_json_path = process.cwd() + "/jasba.json";
+        jasba_json_path = process.cwd() + "/jasba.json",
+        flags = process.argv.slice(2);
 
     if (!fs.existsSync(jasba_json_path)) {
-        logger.strong("Error: Cannot find `jasba.json` at `" + process.cwd() + "`");
+        logger.error("Error: Cannot find `jasba.json` at `" + process.cwd() + "`");
         process.kill(process.pid, "SIGINT");
     }
 
@@ -20,24 +21,25 @@
             copy: require("./build_copy")
         },
         build_config = require(jasba_json_path),
-        do_not_watch = process.argv.indexOf("--do-not-watch") > -1;
+        should_watch = flags.indexOf("--watch") > -1;
 
-    // main
-    logger.faded("#");
-    for (var name in build_config) if (build_config.hasOwnProperty(name)) perform_build(name, build_config[name]);
+    start();
+
+    function start() {
+        logger.h1("\n  jasba");
+        Object.keys(build_config).forEach(function (key) { perform_build(key, build_config[key]); });
+        logger.h1("\n  ✔\n");
+    }
 
     function perform_build(name, config) {
-        if (!builders.hasOwnProperty(config.type)) throw new Error("Unknown build type: " + config.type);
-        if (config.skip) logger.strong("\nskipping " + name);
-        else {
-            builders[config.type].build(name, config);
-            if (!do_not_watch && !config.being_watched && config.watch_folders) {
-                watch(config.watch_folders, function () {
-                    logger.strong("\n  ~~ rebuild ~~");
-                    perform_build(name, config);
-                });
-                config.being_watched = true;
-            }
+        if (!builders.hasOwnProperty(config.type)) {
+            logger.error("Unknown build type: " + config.type);
+            process.kill(process.pid, "SIGINT");
+        }
+        builders[config.type].build(name, config);
+        if (should_watch && !config.being_watched && config.watch_folders) {
+            watch(config.watch_folders, function () { perform_build(name, config); });
+            config.being_watched = true;
         }
     }
 
