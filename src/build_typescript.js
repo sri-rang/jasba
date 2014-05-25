@@ -4,8 +4,9 @@
     var logger = require("./logger");
 
     exports.build = function (name, config) {
-        logger.strong("\n" + name, config.type);
-        throw new Error(config.type + " not implemented");
+        logger.info("\n  " + name);
+        logger.error(config.type + " not implemented");
+        process.kill(process.pid, "SIGINT");
     };
-    
+
 })();

@@ -8,7 +8,7 @@
     var logger = require("./logger");
 
     exports.build = function (name, config) {
-        logger.strong("\n" + name, config.type);
+        logger.info("\n  " + name);
         var code = "",
             target = process.cwd() + "/" + config.target,
             sources = config.sources;
@@ -16,8 +16,8 @@
         less.render(code, {compress: config.minify}, function (error, css) {
             if (error) throw new Error(error);
             else {
-                fs_extra.outputFileSync(target, css, "utf-8"); // todo write css to target
-                logger.faded("generated " + target);
+                fs_extra.outputFileSync(target, css, "utf-8");
+                logger.info("  ✔");
             }
         });
     };
