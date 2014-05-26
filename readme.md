@@ -1,58 +1,24 @@
 # jasba
 
-jasba is a minimalist build tool that compiles javascript and less source files.
+jasba is a minimalist build tool that compiles javascript and less source files
 
-it runs a server that watches source folders and triggers the build on change.
+### config
 
-jasba projects have a simple json based build configuration, example below:
+builds are configured in `jasba.json`
 
-    {
-        "compile less"    : {
-            "type"         : "less",
-            "sources"      : [
-                "src/less/file_1.less",
-                "src/less/file_2.less",
-            ],
-            "minify"       : true,
-            "target"       : "target/css/styles.css",
-            "watch_folders": ["src/less/"]
-        },
-        "compile js"      : {
-            "type"         : "javascript",
-            "sources"      : [
-                "libs/jquery.js",
-                "libs/underscore.js",
-                "src/js/file_1.js",
-                "src/js/file_2.js"
-            ],
-            "minify"       : false,
-            "target"       : "target/js/scripts.js",
-            "watch_folders": ["src/js/"]
-        },
-        "copy files": {
-            "type"         : "copy",
-            "files"        : [
-                {
-                    "src" : "target/css/styles.css",
-                    "dest": "/some/other/location/styles.css"
-                }
-            ],
-            "watch_folders": ["target/"]
-        }
-    }
+an example can be found in `./examples`
 
-the config file must be called **build_config.json**.
+### pre requisites
 
-it must live in your project's root folder.
+- node.js
 
-### why did you create this?
+### usage
 
-i wanted something simple and minimal.
-
-### will you support it?
-
-yes, as long as its being used.
-
-and i expect to be using it for a long time.
-
-it's also being used by teams at my workplace, so i guess i have to.
+    # install jasba
+    npm install -g jasba
+    
+    # build
+    jasba
+    
+    # build and watch
+    jasba --watch
