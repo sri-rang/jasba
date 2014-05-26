@@ -8,7 +8,6 @@
     var logger = require("./logger");
 
     exports.build = function (name, config) {
-        logger.info("\n  " + name);
         var code = "",
             target = process.cwd() + "/" + config.target,
             sources = config.sources;
@@ -17,7 +16,7 @@
             if (error) throw new Error(error);
             else {
                 fs_extra.outputFileSync(target, css, "utf-8");
-                logger.info("  ✔");
+                logger.info("  √ " + name);
             }
         });
     };
