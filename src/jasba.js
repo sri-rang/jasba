@@ -28,7 +28,7 @@
     function start() {
         logger.h1("\n  jasba");
         Object.keys(build_config).forEach(function (key) { perform_build(key, build_config[key]); });
-        logger.h1("\n  ✔\n");
+        logger.h1("  ok\n");
     }
 
     function perform_build(name, config) {

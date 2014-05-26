@@ -14,6 +14,6 @@
     exports.error = function () { console.log("\n  ✘ " + Array.prototype.slice.call(arguments).join(", ").error.bold + "\n"); };
     exports.info = function () { console.log(Array.prototype.slice.call(arguments).join(", ").info); };
     exports.warn = function () { console.log(Array.prototype.slice.call(arguments).join(", ").warn); };
-    exports.h1 = function () { console.log(Array.prototype.slice.call(arguments).join(", ").grey.bold); };
+    exports.h1 = function () { console.log(Array.prototype.slice.call(arguments).join(", ").white.bold); };
 
 })();
