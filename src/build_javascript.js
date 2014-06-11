@@ -12,7 +12,11 @@
             target = process.cwd() + "/" + config.target,
             code, ugly;
         if (config.debug) {
-            code = compile_files.reduce(function (acc, path) { return acc + fs.readFileSync(path, "utf-8"); }, "");
+            code = compile_files.reduce(function (acc, path) {
+                return acc + "\n\n " +
+                    ";//" + path + "\n\n" +
+                    "" + fs.readFileSync(path, "utf-8");
+            }, "");
         }
         else {
             ugly = uglify_js.minify(compile_files, {});
