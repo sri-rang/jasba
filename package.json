@@ -1,6 +1,6 @@
 {
     "name": "jasba",
-    "version": "0.5.10",
+    "version": "0.6.0",
     "description": "build server for javascript and less",
     "keywords": [
         "build",
