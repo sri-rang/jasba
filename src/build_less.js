@@ -12,10 +12,10 @@
             target = process.cwd() + "/" + config.target,
             sources = config.sources;
         sources.forEach(function (path) { code += fs.readFileSync(path, "utf-8"); });
-        less.render(code, {compress: config.minify}, function (error, css) {
+        less.render(code, {compress: config.minify}, function (error, result) {
             if (error) throw new Error(error);
             else {
-                fs_extra.outputFileSync(target, css, "utf-8");
+                fs_extra.outputFileSync(target, result.css, "utf-8");
                 logger.info("  √ " + name);
             }
         });
