@@ -1,7 +1,7 @@
 {
     "name": "jasba",
-    "version": "0.5.10",
-    "description": "build server for javascript and less",
+    "version": "0.6.0",
+    "description": "deprecated - build server for javascript and less",
     "keywords": ["build", "build tool", "build server", "uglify", "less", "javascript", "typescript", "stylus"],
     "author": "Srirangan <srirangan@gmail.com>",
     "repository": {
